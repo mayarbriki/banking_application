@@ -1,0 +1,11 @@
+<form (submit)="signIn()">
+    <label for="username">Username:</label>
+    <input type="text" id="username" [(ngModel)]="user.username" name="username" required>
+  
+    <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+        <a routerLink="/sign-in">Sign In</a>
+
+    <button type="submit">Sign In</button>
+  </form>
+  
