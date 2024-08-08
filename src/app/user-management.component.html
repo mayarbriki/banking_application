@@ -1,0 +1,148 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color: white;">User Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" (click)="onOpenModal(null, 'add')">Add User <span class="sr-only">(current)</span></a>
+        </li>
+        
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input type="text" ngModel="key" name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search users...">
+      </form>
+    </div>
+  </nav>
+  
+  
+  <div class="container" id="main-container">
+  <div class="row">
+     <nav>
+              
+        <a routerLink="/sign-up">Sign Up</a>
+      </nav>
+      <router-outlet></router-outlet>
+   <div *ngFor="let user of users" class="col-md-6 col-xl-3">
+      <div class="card m-b-30">
+         <div class="card-body row">
+         
+            
+         </div>
+         <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-envelope float-right"></i>{{user?.email}}</li>
+         </ul>
+         
+         
+         <div class="card-body">
+            <div class="float-right btn-group btn-group-sm">
+               <a (click)="onOpenModal(user, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+               <a (click)="onOpenModal(user, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>
+         </div>
+      </div>
+   </div>
+  </div>
+  </div>
+  
+  <!-- Add user Modal -->
+  <div class="modal fade" id="adduserModal" tabindex="-1" role="dialog" aria-labelledby="adduserModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="adduserModalLabel">Add user</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+          
+                       <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+           </div>
+           <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>
+           </div>
+           <div class="form-group">
+              <label for="phone">Job title</label>
+              <input type="text" ngModel name="jobTitle" class="form-control" id="jobTile" placeholder="Job title" required>
+           </div>
+           <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="text" ngModel name="phone" class="form-control" id="phone" placeholder="Phone" required>
+           </div>
+         
+           <div class="form-group">
+              <label for="phone">Image URL</label>
+              <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>
+           </div>
+           <div class="modal-footer">
+              <button type="button" id="add-user-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           </div>
+         
+        </div>
+     </div>
+   </div>
+   </div>
+  
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateuserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #editForm="ngForm">
+               <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" ngModel="editUser?.username" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+               </div>
+               <input type="hidden" ngModel="editUser?.id" name="id" class="form-control" id="id" placeholder="Email">
+               <input type="hidden" ngModel="editUser?.full_name" name="userCode" class="form-control" id="userCode" placeholder="Email">
+               <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" ngModel="editUser?.email" name="email" class="form-control" id="email" placeholder="Email">
+               </div>
+               
+              
+               <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+  </div>
+  
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteuserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Delete user</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+         </div>
+      </div>
+   </div>
+  </div>
+  </div>
+  
+  <!-- Notification for no users -->
+  <div *ngIf="users?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+   <h4 class="alert-heading">NO userS!</h4>
+   <p>No users were found.</p>
+  </div>
+  </div>

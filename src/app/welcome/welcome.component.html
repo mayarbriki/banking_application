@@ -1,0 +1,31 @@
+<!-- welcome.component.html -->
+<div class="welcome">
+    <h1>Welcome to the Banking Application</h1>
+    <div class="dashboard">
+      <h2>Dashboard</h2>
+      <p>Account Balance: {{ accountBalance | currency }}</p>
+      <button (click)="showSection('withdraw')">Withdraw</button>
+      <button (click)="showSection('deposit')">Deposit</button>
+      <button (click)="showSection('transfer')">Transfer</button>
+  
+      <div *ngIf="currentSection === 'withdraw'" [@fadeInOut]>
+        <h3>Withdraw Money</h3>
+        <input type="number" [(ngModel)]="amount" placeholder="Amount">
+        <button (click)="withdraw()">Withdraw</button>
+      </div>
+  
+      <div *ngIf="currentSection === 'deposit'" [@fadeInOut]>
+        <h3>Deposit Money</h3>
+        <input type="number" [(ngModel)]="amount" placeholder="Amount">
+        <button (click)="deposit()">Deposit</button>
+      </div>
+  
+      <div *ngIf="currentSection === 'transfer'" [@fadeInOut]>
+        <h3>Transfer Money</h3>
+        <input type="number" [(ngModel)]="amount" placeholder="Amount">
+        <input type="text" [(ngModel)]="recipient" placeholder="Recipient">
+        <button (click)="transfer()">Transfer</button>
+      </div>
+    </div>
+  </div>
+  
