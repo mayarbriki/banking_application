@@ -28,6 +28,7 @@ export class WelcomeComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    
     this.getAccountBalance();
   }
 
@@ -52,8 +53,8 @@ export class WelcomeComponent implements OnInit {
   }
 
   withdraw() {
-    const body = { amount: this.amount };
-    this.http.post(`${environment.apiBaseUrl}/withdraw`, body)
+    const body = { userId: this.userId, amount: this.amount };
+    this.http.post(`${environment.apiBaseUrl}/user/withdraw`, body)
       .subscribe(response => {
         console.log('Withdraw successful', response);
         this.getAccountBalance(); // Refresh balance after transaction
@@ -61,6 +62,7 @@ export class WelcomeComponent implements OnInit {
         console.error('Withdraw failed', error);
       });
   }
+  
 
   deposit() {
     const body = { amount: this.amount };
@@ -74,7 +76,15 @@ export class WelcomeComponent implements OnInit {
   }
 
   transfer() {
-    const body = { amount: this.amount, recipient: this.recipient };
+    console.log('User ID:', this.userId); // Check if this.userId is correct
+      console.log('User ID:', this.userId); // Check if this.userId is correct
+
+    const body = {
+      fromAccountId: this.userId.toString(),
+      toAccountId: this.recipient,
+      amount: this.amount.toString()
+    };
+  
     this.http.post(`${environment.apiBaseUrl}/transfer`, body)
       .subscribe(response => {
         console.log('Transfer successful', response);
@@ -83,4 +93,7 @@ export class WelcomeComponent implements OnInit {
         console.error('Transfer failed', error);
       });
   }
+  
+  
+  
 }
